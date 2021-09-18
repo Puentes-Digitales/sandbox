@@ -9,6 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+
 import { FaChevronLeft, FaChevronRight, FaListOl } from "react-icons/fa";
 import { useUpdateEffect } from "react-use";
 import { Pagination, Progress, Table, TableCell } from "semantic-ui-react";
@@ -33,6 +34,7 @@ import {
   Text,
   Tooltip,
   useDisclosure,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 
@@ -274,6 +276,7 @@ export const StudentList: FC<{
     return studentListChunks[pageSelected - 1];
   }, [studentListChunks, pageSelected]);
 
+  const textColor = useColorModeValue("black", "white");
   return (
     <>
       <Button
@@ -304,7 +307,6 @@ export const StudentList: FC<{
           <DrawerHeader height={20} display="flex" alignItems="center">
             {STUDENT_LIST_TITLE} {loadingData && <Spinner ml={3} />}
           </DrawerHeader>
-
           <Pagination
             css={[textAlignCenter, { alignSelf: "center" }]}
             totalPages={studentListChunks.length}
@@ -318,7 +320,6 @@ export const StudentList: FC<{
               setPageSelected(toInteger(activePage));
             }}
           />
-
           <DrawerBody>
             <Table sortable celled fixed>
               <TableHeader
@@ -420,10 +421,11 @@ export const StudentList: FC<{
                                     width="fit-content"
                                     zIndex={100}
                                     padding="5px"
+                                    textAlign="justify"
                                   >
                                     <PopoverArrow />
                                     <PopoverBody>
-                                      <Text>
+                                      <Text color={textColor}>
                                         {explanation.charAt(0).toUpperCase() +
                                           explanation.slice(1)}
                                       </Text>

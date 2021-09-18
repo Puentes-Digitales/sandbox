@@ -52,6 +52,8 @@ import { marginLeft5px } from "../../utils/cssConstants";
 import { useUser } from "../../utils/useUser";
 import { Help } from "../Help";
 
+import { Parameter } from "../dashboard/Parameter";
+
 import type { $ElementType } from "utility-types";
 const StudentList = dynamic(() => import("./StudentList"));
 
@@ -325,11 +327,11 @@ export const SearchBar: FC<{
         )}
 
         {HELP_ENABLED && <Help />}
-
+        <Parameter show="si" />
         <Button
           css={marginLeft5px}
           negative
-          size="large"
+          size="medium"
           disabled={logoutLoading}
           loading={logoutLoading}
           onClick={async () => {

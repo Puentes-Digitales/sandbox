@@ -328,6 +328,12 @@ export type MutationUpsertUsersArgs = {
   users: Array<UpsertedUser>;
 };
 
+export type Parameter = {
+  id: Scalars["Int"];
+  loading_date: Scalars["DateTime"];
+  loading_type: Scalars["String"];
+};
+
 export type PerformanceByLoad = {
   adviceParagraph: Scalars["String"];
   adviceTitle: Scalars["String"];
@@ -375,6 +381,7 @@ export type Query = {
   feedbackResults: Array<FeedbackResult>;
   getPersistenceValue?: Maybe<Persistence>;
   myPrograms: Array<Program>;
+  parameters: Array<Parameter>;
   programs: Array<Program>;
   students: Array<Student>;
   students_filter: Array<Student>;
@@ -960,6 +967,12 @@ export type StudentsFilterListQuery = {
       >;
     }
   >;
+};
+
+export type ParametersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ParametersQuery = {
+  parameters: Array<Pick<Parameter, "id" | "loading_type" | "loading_date">>;
 };
 
 export type PerformanceLoadAdvicesMutationVariables = Exact<{
@@ -2695,6 +2708,61 @@ export type StudentsFilterListLazyQueryHookResult = ReturnType<
 export type StudentsFilterListQueryResult = Apollo.QueryResult<
   StudentsFilterListQuery,
   StudentsFilterListQueryVariables
+>;
+export const ParametersDocument = gql`
+  query parameters {
+    parameters {
+      id
+      loading_type
+      loading_date
+    }
+  }
+`;
+
+/**
+ * __useParametersQuery__
+ *
+ * To run a query within a React component, call `useParametersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useParametersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useParametersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useParametersQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ParametersQuery,
+    ParametersQueryVariables
+  >
+) {
+  return Apollo.useQuery<ParametersQuery, ParametersQueryVariables>(
+    ParametersDocument,
+    baseOptions
+  );
+}
+export function useParametersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ParametersQuery,
+    ParametersQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<ParametersQuery, ParametersQueryVariables>(
+    ParametersDocument,
+    baseOptions
+  );
+}
+export type ParametersQueryHookResult = ReturnType<typeof useParametersQuery>;
+export type ParametersLazyQueryHookResult = ReturnType<
+  typeof useParametersLazyQuery
+>;
+export type ParametersQueryResult = Apollo.QueryResult<
+  ParametersQuery,
+  ParametersQueryVariables
 >;
 export const PerformanceLoadAdvicesDocument = gql`
   mutation performanceLoadAdvices($student_id: String, $program_id: String) {
